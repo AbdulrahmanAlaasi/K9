@@ -1,0 +1,22 @@
+{
+  "name": "Example Load Test",
+  "testType": "load",
+  "virtualUsers": 5,
+  "duration": 10,
+  "endpoints": [
+    {
+      "url": "https://httpbin.org/get",
+      "method": "GET"
+    },
+    {
+      "url": "https://httpbin.org/post",
+      "method": "POST",
+      "body": "{\"hello\": \"world\"}",
+      "bodyType": "json"
+    }
+  ],
+  "thresholds": [
+    { "metric": "p95", "operator": "lt", "value": 2000 },
+    { "metric": "errorRate", "operator": "lt", "value": 0.1 }
+  ]
+}

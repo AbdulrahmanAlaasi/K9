@@ -1,0 +1,26 @@
+{
+  "name": "K9 Self-Test — Dogfooding",
+  "testType": "load",
+  "virtualUsers": 10,
+  "duration": 15,
+  "endpoints": [
+    {
+      "url": "http://localhost:3001/api/dashboard/stats",
+      "method": "GET"
+    },
+    {
+      "url": "http://localhost:3001/api/projects",
+      "method": "GET"
+    },
+    {
+      "url": "http://localhost:3001/api/settings",
+      "method": "GET"
+    }
+  ],
+  "thresholds": [
+    { "metric": "p95", "operator": "lt", "value": 200 },
+    { "metric": "p99", "operator": "lt", "value": 500 },
+    { "metric": "errorRate", "operator": "lt", "value": 0.01 },
+    { "metric": "avgResponseTime", "operator": "lt", "value": 100 }
+  ]
+}

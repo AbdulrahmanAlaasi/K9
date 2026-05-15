@@ -1,0 +1,28 @@
+{
+  "name": "k9",
+  "version": "0.1.0",
+  "private": true,
+  "description": "K9 — Local-only performance testing platform",
+  "scripts": {
+    "dev": "pnpm run --parallel dev",
+    "dev:api": "pnpm --filter @k9/api dev",
+    "dev:web": "pnpm --filter @k9/web dev",
+    "k9": "pnpm --filter @k9/cli dev --",
+    "build": "pnpm run --parallel build",
+    "lint": "pnpm run --parallel lint",
+    "format": "prettier --write \"**/*.{ts,tsx,json,css,md}\"",
+    "db:generate": "pnpm --filter @k9/api db:generate",
+    "db:push": "pnpm --filter @k9/api db:push",
+    "db:studio": "pnpm --filter @k9/api db:studio",
+    "test": "pnpm run --parallel test"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "devDependencies": {
+    "prisma": "6.6.0"
+  },
+  "dependencies": {
+    "@prisma/client": "6.6.0"
+  }
+}

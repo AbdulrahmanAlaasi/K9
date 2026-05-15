@@ -1,0 +1,75 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:../data/k9.db"
+}
+
+model Project {
+  id          String       @id @default(uuid())
+  name        String       @unique
+  description String?
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  tests       TestConfig[]
+}
+
+model TestConfig {
+  id             String    @id @default(uuid())
+  projectId      String
+  name           String
+  testType       String    // smoke | load | stress | spike | soak
+  executor       String    // constant-vus | ramping-vus | constant-rate
+  virtualUsers   Int       @default(1)
+  duration       Int       @default(60) // seconds
+  stages         String    @default("[]") // JSON
+  endpoints      String    @default("[]") // JSON
+  thresholds     String    @default("[]") // JSON
+  checks         String    @default("[]") // JSON
+  defaultHeaders String    @default("{}") // JSON
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  project        Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  runs           TestRun[]
+
+  @@index([projectId])
+}
+
+model TestRun {
+  id                String   @id @default(uuid())
+  testConfigId      String
+  status            String   @default("pending") // pending | running | completed | failed | cancelled
+  startedAt         DateTime?
+  completedAt       DateTime?
+  durationMs        Int      @default(0)
+  totalRequests     Int      @default(0)
+  failedRequests    Int      @default(0)
+  errorRate         Float    @default(0)
+  avgResponseTime   Float    @default(0)
+  minResponseTime   Float    @default(0)
+  maxResponseTime   Float    @default(0)
+  p50               Float    @default(0)
+  p90               Float    @default(0)
+  p95               Float    @default(0)
+  p99               Float    @default(0)
+  requestsPerSecond Float    @default(0)
+  thresholdResults  String   @default("[]") // JSON
+  checkResults      String   @default("[]") // JSON
+  timeSeriesData    String   @default("[]") // JSON
+  endpointBreakdown String   @default("[]") // JSON
+  createdAt         DateTime @default(now())
+  testConfig        TestConfig @relation(fields: [testConfigId], references: [id], onDelete: Cascade)
+
+  @@index([testConfigId])
+  @@index([status])
+}
+
+model Settings {
+  id                   Int     @id @default(1)
+  allowLocalTargets    Boolean @default(false)
+  maxVirtualUsers      Int     @default(100)
+  maxDurationSeconds   Int     @default(600)
+  maxRequestsPerSecond Int     @default(500)
+}
