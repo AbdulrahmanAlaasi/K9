@@ -38,6 +38,34 @@ Think of it as a modern, self-hosted alternative to tools like k6 or Grafana Clo
 
 ---
 
+## Screenshots
+
+<p align="center">
+  <img src="docs/screenshots/dashboard.png" alt="K9 Dashboard" width="100%" />
+  <br />
+  <sub><strong>Dashboard</strong> — Performance overview with stats and recent test runs</sub>
+</p>
+
+<p align="center">
+  <img src="docs/screenshots/create-test.png" alt="Create Test" width="100%" />
+  <br />
+  <sub><strong>Create Test</strong> — Configure test type, virtual users, duration, and endpoints</sub>
+</p>
+
+<p align="center">
+  <img src="docs/screenshots/report.png" alt="Test Report" width="100%" />
+  <br />
+  <sub><strong>Test Report</strong> — Detailed results with response time distribution and charts</sub>
+</p>
+
+<p align="center">
+  <img src="docs/screenshots/projects.png" alt="Projects" width="100%" />
+  <br />
+  <sub><strong>Projects</strong> — Organize and manage your test suites</sub>
+</p>
+
+---
+
 ## Architecture
 
 K9 is a **pnpm monorepo** with three apps and a shared package:

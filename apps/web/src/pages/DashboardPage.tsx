@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
+import { useNavigate, Link } from 'react-router-dom';
 import { api } from '../api/client';
 import {
   Activity, FolderKanban, FlaskConical, Timer, CheckCircle2, XCircle,
@@ -6,9 +7,9 @@ import {
 } from 'lucide-react';
 import { clsx } from 'clsx';
 import type { RunStatus } from '@k9/shared';
-import { Link } from 'react-router-dom';
 
 export function DashboardPage() {
+  const navigate = useNavigate();
   const { data: stats, isLoading } = useQuery({
     queryKey: ['dashboard-stats'],
     queryFn: api.getDashboardStats,
@@ -120,8 +121,11 @@ export function DashboardPage() {
                   {stats.recentRuns.map((run, idx) => (
                     <tr
                       key={run.id}
-                      className="border-b border-surface-800/20 hover:bg-white/[0.02] transition-colors duration-150 group"
+                      className="border-b border-surface-800/20 hover:bg-white/[0.04] transition-colors duration-150 group cursor-pointer"
                       style={{ animationDelay: `${idx * 50}ms` }}
+                      onClick={() => navigate(
+                        run.status === 'running' ? `/runs/${run.id}/live` : `/runs/${run.id}/report`
+                      )}
                     >
                       <td className="py-3.5 px-4">
                         <span className="font-semibold text-surface-200 group-hover:text-white transition-colors">
